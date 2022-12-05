@@ -1,0 +1,17 @@
+ID;NAME;SECOND NAME;SURNAME;GENDER;AGE;CITY;POSITION
+1;Vasilij;Vasil'evich;Vasil'ev;male;30;Moscow;manager
+2;Vasilij;Vasil'evich;Vasil'ev;male;40;Moscow;manager
+3;Vasilisa;Vasil'evna;Vasil'eva;female;20;Novosibirsk;seller
+4;Viktor;Viktorovich;Viktorov;male;25;Ekaterinburg;seller
+5;Viktor;Viktorovich;Viktorov;male;25;Kazan;seller
+6;Viktoriya;Viktorovna;Viktorova;female;25;Saint-Petersburg;seller
+7;Viktoriya;Viktorovna;Viktorova;female;25;Omsk;seller
+8;Denis;Denisovich;Denisov;male;50;Moscow;director
+9;Egor;Egorovich;Egorov;male;35;Novosibirsk;seller
+10;Ivan;Ivanovich;Ivanov;male;30;Moscow;manager
+11;Ivan;Ivanovich;Ivanov;male;30;Moscow;manager
+12;Oleg;Olegovich;Olegov;male;45;Ekaterinburg;seller
+13;Pyotr;Petrovich;Petrov;male;40;Saint-Petersburg;manager
+14;Pyotr;Petrovich;Petrov;male;40;Chelyabinsk;seller
+15;Sidor;Sidorovich;Sidorov;male;35;Saint-Petersburg;seller
+16;YAna;YAnovna;YAnova;female;30;Moscow;seller

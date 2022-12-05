@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FindAllDBFiles:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FindAllDBFiles_jar</output-path>
+    <root id="archive" name="FindAllDBFiles.jar">
+      <element id="module-output" name="FindAllDBFiles" />
+    </root>
+  </artifact>
+</component>

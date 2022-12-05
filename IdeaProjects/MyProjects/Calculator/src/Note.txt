@@ -1,0 +1,200 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.regex.Pattern;
+
+public class AppFrame extends JFrame {
+    JPanel contentPanel = new JPanel();
+    JLabel addFirstNumber = new JLabel("Лёха, введи первое число и нажми <Enter>:");
+    JTextField firstNumberField = new JTextField();
+    JLabel addOperator = new JLabel("Лёха, выбери оператор:");
+    JPanel operatorPanel = new JPanel(new FlowLayout());
+    ButtonGroup buttonGroup = new ButtonGroup();
+    JCheckBox minus = new JCheckBox("-");
+    JCheckBox plus = new JCheckBox("+");
+    JCheckBox multiply = new JCheckBox("*");
+    JCheckBox divide = new JCheckBox("/");
+    JLabel addSecondNumber = new JLabel("Лёха, введи второе число и нажми <Enter>:");
+    JTextField secondNumberField = new JTextField();
+    JButton calculateResult = new JButton("Вычислить результат");
+    JScrollPane scrollPane;
+    JTextArea resultText = new JTextArea("");
+    boolean resetStrings = false;
+    boolean resetNumbers = false;
+    StringBuilder result = new StringBuilder();
+    final String NOT_NUMBER = "\nВведенное значение не является числом. \nВведите число.";
+    final String NOT_OPERATOR = "Вы не выбрали оператор";
+    String firstNumberInput = "";
+    String operator = "";
+    String secondNumberInput = "";
+    String alert = "";
+    String test = "test";
+    int countAlert = 0;
+    double firstNumber;
+    double secondNumber;
+    double resultCount;
+
+    public AppFrame() {
+        setTitle("Калькулятор для Лёхи");
+        setSize(new Dimension(750,750));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setContentPane(contentPanel);
+        setLayout(new BoxLayout(contentPanel,BoxLayout.PAGE_AXIS));
+        setLocationRelativeTo(null);
+
+        contentPanel.setBackground(Color.PINK);
+
+        buttonGroup.add(minus);
+        buttonGroup.add(plus);
+        buttonGroup.add(multiply);
+        buttonGroup.add(divide);
+
+        firstNumberField.setMaximumSize(new Dimension(150, 20));
+        secondNumberField.setMaximumSize(new Dimension(150, 20));
+
+        addFirstNumber.setAlignmentX(Component.CENTER_ALIGNMENT);
+        firstNumberField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addOperator.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addSecondNumber.setAlignmentX(Component.CENTER_ALIGNMENT);
+        secondNumberField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        calculateResult.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        resultText.setEditable(false);
+
+        scrollPane = new JScrollPane(resultText);
+        scrollPane.setMaximumSize(new Dimension(250, 400));
+
+        operatorPanel.setMaximumSize(new Dimension(200, 25));
+        operatorPanel.setBackground(Color.PINK);
+        operatorPanel.add(plus);
+        operatorPanel.add(minus);
+        operatorPanel.add(multiply);
+        operatorPanel.add(divide);
+
+        add(Box.createRigidArea(new Dimension(contentPanel.getWidth(), 50)));
+        contentPanel.add(addFirstNumber);
+        contentPanel.add(firstNumberField);
+        add(Box.createRigidArea(new Dimension(contentPanel.getWidth(), 15)));
+        contentPanel.add(addOperator);
+        contentPanel.add(operatorPanel);
+        add(Box.createRigidArea(new Dimension(contentPanel.getWidth(), 15)));
+        contentPanel.add(addSecondNumber);
+        contentPanel.add(secondNumberField);
+        add(Box.createRigidArea(new Dimension(contentPanel.getWidth(), 50)));
+        contentPanel.add(calculateResult);
+        add(Box.createRigidArea(new Dimension(contentPanel.getWidth(), 50)));
+        contentPanel.add(scrollPane);
+
+        firstNumberField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                firstNumberInput = firstNumberField.getText();
+                if (isNumber(firstNumberInput)){
+                    firstNumber = getNumber(firstNumberField.getText());
+                    if (firstNumberInput != "") {
+                        result.append("\n")
+                                .append(firstNumber)
+                                .append(" ");
+                    }
+//                    result.insert(0,firstNumber);
+//                    resultText.setText(String.valueOf(result));
+                } else {
+                    result.append(NOT_NUMBER);
+                    resultText.setText(String.valueOf(result));
+                }
+            }
+        });
+
+        secondNumberField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                secondNumberInput = secondNumberField.getText();
+                if (isNumber(secondNumberInput)){
+                    secondNumber = getNumber(secondNumberField.getText());
+                    if ((firstNumberInput != "") && (operator != "") && (secondNumberInput != "")) {
+                        resultCount = switch (operator) {
+                            case "+" -> firstNumber + secondNumber;
+                            case "-" -> firstNumber - secondNumber;
+                            case "*" -> firstNumber * secondNumber;
+                            case "/" -> firstNumber / secondNumber;
+                            default -> 0;
+                        };
+                        result.append(secondNumber)
+                                .append(" = ")
+                                .append(resultCount)
+                                .append("\n");
+                    }
+                } else {
+                    result.append(NOT_NUMBER);
+                    resultText.setText(String.valueOf(result));
+                }
+            }
+        });
+
+        calculateResult.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resultText.setText(String.valueOf(result));
+                firstNumber = 0;
+                secondNumber = 0;
+                firstNumberField.setText("");
+
+                secondNumberField.setText("");
+            }
+        });
+
+        plus.addItemListener(new CalculatorItemListener());
+        minus.addItemListener(new CalculatorItemListener());
+        multiply.addItemListener(new CalculatorItemListener());
+        divide.addItemListener(new CalculatorItemListener());
+
+        setVisible(true);
+    }
+
+    public boolean isNumber(String str) {
+        Pattern pattern = Pattern.compile("\\d+\\.?\\d*");
+        return pattern.matcher(str).find();
+    }
+
+    public double getNumber(String inputString) {
+        return Double.parseDouble(inputString);
+    }
+
+//    public void fillresultText() {
+//        if (firstNumberInput != "") {
+//            result.append(firstNumberInput)
+//                    .append(" ");
+//        } else if ((firstNumberInput != "") && (operator != "")) {
+//            result.append(operator)
+//                    .append(" ");
+//        } else if ((firstNumberInput != "") && (operator != "") && (secondNumberInput != "")) {
+//            result.append(secondNumber)
+//                    .append(" = ")
+//                    .append(resultCount);
+//        }
+//        resultText.setText(String.valueOf(result));
+//    }
+
+    public void reset() {
+
+    }
+
+    public class CalculatorItemListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            e.getItemSelectable();
+
+            operator = ((JCheckBox) e.getSource()).getText();
+            if ((firstNumberInput != "") && (operator != "")) {
+                result.append(operator)
+                        .append(" ");
+            }
+        }
+    }
+}
+
+

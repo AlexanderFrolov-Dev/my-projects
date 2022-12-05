@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FJExperiment:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FJExperiment_jar</output-path>
+    <root id="archive" name="FJExperiment.jar">
+      <element id="module-output" name="FJExperiment" />
+    </root>
+  </artifact>
+</component>

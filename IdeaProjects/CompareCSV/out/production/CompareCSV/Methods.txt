@@ -1,0 +1,147 @@
+    public static String[] getLettersForColumns(String[] cells) {
+        String[] lettersForColumns = new String[cells.length];
+        StringBuilder addSecondLetter = new StringBuilder();
+        final int numberOfLettersOfAlphabet = 26;
+        int numberOfLetter = 0;
+        char startLetter = 'A';
+        char firstLetter = startLetter;
+        int endLetterNumber = (int) 'A' + cells.length;
+        char endLetter = (char) endLetterNumber;
+        for(char i = startLetter; i < endLetter; i++){
+            lettersForColumns[(int) i - 65] = String.valueOf(i);
+            System.out.println(lettersForColumns[(int) i - 65]);
+            numberOfLetter++;
+            if (numberOfLetter >= 26) {
+                firstLetter = startLetter++;
+            }
+        }
+        // TODO: 08.07.2022 Попробовать использовать рекурсию.
+        return null;
+    }
+
+        private static void getLetter(int cellsCount) {
+            String[] letters = new String[cellsCount];
+            String[] additionalLetters = new String[cellsCount / 26];
+            char additionalFirstLetter = 'A';
+            char letter;
+            if (cellsCount < 26) {
+                for (int i = 0; i < cellsCount; i++) {
+                    letter = (char) (i + 65);
+                    letters[i] = String.valueOf(letter);
+                }
+            } else {
+                while (cellsCount <= 26) {
+                    additionalLetters[0] = String.valueOf(additionalFirstLetter);
+                    getLetter(cellsCount - 26);
+                    additionalFirstLetter++;
+                }
+            }
+        }
+
+            private static void getLetter(int cellsCount) {
+                String[] letters = new String[cellsCount];
+                String[] additionalLetters = new String[cellsCount / 26];
+                char additionalFirstLetter = 'A';
+                char letter;
+                if (cellsCount < 26) {
+                    for (int i = 0; i < cellsCount; i++) {
+                        letter = (char) (i + 65);
+                        letters[i] = String.valueOf(letter);
+                    }
+                } else {
+                    while (cellsCount <= 26) {
+                        additionalLetters[0] = String.valueOf(additionalFirstLetter);
+                        getLetter(cellsCount - 26);
+                        additionalFirstLetter++;
+                    }
+                }
+            }
+
+                private static void getLetter(int cellsCount) {
+                    int countFullAlphabets = cellsCount / 26;
+                    String[] letters = new String[cellsCount];
+                    String[] additionalLetters = new String[countFullAlphabets];
+                    int remains = cellsCount % 26;
+                    char additionalFirstLetter = 'A';
+                    char letter;
+                    if (countFullAlphabets > 0) {
+
+                    }
+                    for (int i = 0; i < )
+                }
+
+                    private static String[] recursive(int cellsCount, String appender) {
+                        String[] lettersIndexOfCells = new String[cellsCount];
+                //        StringBuilder sb = new StringBuilder();
+                //        appender = "";
+                        int count = 0;
+                        char letter;
+                        char additionalLetter;
+                        int additionalLetterCount = 0;
+                        for (int i = 0; i < cellsCount; i++) {
+                            letter = (char) (i + 65);
+                //            sb.append(appender);
+                            lettersIndexOfCells[count] = i + " - " + appender + letter;
+                            count++;
+                            if (i == 26) {
+                                additionalLetter = (char) (additionalLetterCount + 65);
+                                additionalLetterCount++;
+                                recursive(24, String.valueOf(additionalLetter));
+                            }
+                        }
+                        return lettersIndexOfCells;
+                    }
+
+------------------------------------------------------------------------------------------------------------------------
+Рабочий вариант. Получить массив буквенных индексов ячейки.
+------------------------------------------------------------------------------------------------------------------------
+    private static String[] setIndexesOfCells(int cellsCount) {
+        String[] lettersIndexOfCells = new String[cellsCount];
+        String appender = "";
+        int count = 0;
+        char letter;
+        char additionalLetter;
+        int indexLetter = 0;
+        int additionalLetterCount = 0;
+
+        for (int i = 0; i < cellsCount; i++) {
+            letter = (char) (indexLetter + 65);
+            lettersIndexOfCells[count] = i + " - " + appender + letter;
+//            System.out.println(lettersIndexOfCells[count]);
+            indexLetter++;
+            count++;
+            if ((i != 0) && (i % 25 == 0)) {
+//                System.out.println("i % 26 == 0");
+                additionalLetter = (char) (additionalLetterCount + 65);
+                additionalLetterCount++;
+                appender = String.valueOf(additionalLetter);
+                indexLetter = 0;
+            }
+        }
+        return lettersIndexOfCells;
+    }
+
+------------------------------------------------------------------------------------------------------------------------
+Рабочий вариант. Получить массив буквенных индексов ячейки с помощью рекурсии.
+------------------------------------------------------------------------------------------------------------------------
+    private static ArrayList<String> setIndexes(int cellsCount) {
+        char letter;
+        char additionalLetter;
+        int count = array.size();
+
+        if (array.size() < cellsCount) {
+            if (count < 26) {
+                letter = (char) (count + 65);
+                array.add(String.valueOf(letter));
+            } else {
+                letter = (char) ((count % 26) + 65);
+                additionalLetter = (char) (((count / 26) - 1) + 65);
+                array.add(String.valueOf(additionalLetter) + letter);
+            }
+            setIndexes(cellsCount);
+        }
+        return array;
+    }
+------------------------------------------------------------------------------------------------------------------------
+рабочий вариант
+------------------------------------------------------------------------------------------------------------------------

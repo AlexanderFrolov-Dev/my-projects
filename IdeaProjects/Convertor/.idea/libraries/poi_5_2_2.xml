@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="poi-5.2.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../poi-5.2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/poi-5.2.2-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../poi-5.2.2.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../poi-5.2.2" />
+    </SOURCES>
+  </library>
+</component>

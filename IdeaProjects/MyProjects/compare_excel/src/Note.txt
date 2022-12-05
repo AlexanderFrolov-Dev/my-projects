@@ -1,0 +1,156 @@
+JFrame jFrame = new JFrame("Сравнение таблиц Excel");
+
+jFrame.setLayout(new BoxLayout(jFrame.getmainPain(), BoxLayout.PAGE_AXIS));
+
+JLabel addFirstTable = new JLabel("Введите путь к первой таблице");
+JLabel addSecondTable = new JLabel("Введите путь ко второй таблице");
+JTextField firstPath = new JTextField(20);
+JTextField secondPath = new JTextField();
+
+jFrame.setSize(new Dimension(700,900));
+jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+addFirstTable.setAlignmentX(Component.CENTER_ALIGNMENT);
+firstPath.setAlignmentX(Component.CENTER_ALIGNMENT);
+addSecondTable.setAlignmentX(Component.CENTER_ALIGNMENT);
+secondPath.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+jFrame.add(addFirstTable);
+jFrame.add(firstPath);
+jFrame.add(addSecondTable);
+jFrame.add(secondPath);
+
+jFrame.setVisible(true);
+
+--Рабочая версия класса AppFrame с менеджером компоновки BoxLayout--
+import javax.swing.*;
+import java.awt.*;
+
+public class AppFrame extends JFrame{
+      JPanel mainPain = new JPanel();
+      JLabel addFirstTable = new JLabel("Введите путь к первой таблице");
+      JLabel addSecondTable = new JLabel("Введите путь ко второй таблице");
+      JTextField firstPath = new JTextField(20);
+      JTextField secondPath = new JTextField();
+
+      public AppFrame() {
+            setTitle("Сравнение таблиц Excel");
+            setSize(700,1000);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            addFirstTable.setAlignmentX(Component.CENTER_ALIGNMENT);
+            firstPath.setAlignmentX(Component.CENTER_ALIGNMENT);
+            addSecondTable.setAlignmentX(Component.CENTER_ALIGNMENT);
+            secondPath.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            mainPain.add(addFirstTable);
+            mainPain.add(firstPath);
+            mainPain.add(addSecondTable);
+            mainPain.add(secondPath);
+
+            mainPain.setLayout(new BoxLayout(mainPain,BoxLayout.PAGE_AXIS));
+
+            add(mainPain);
+
+            setVisible(true);
+      }
+}
+
+--Вторая версия класса AppFrame--
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class AppFrame extends JFrame{
+    JPanel mainPain = new JPanel();
+    JLabel addFirstTable = new JLabel("Введите путь к первой таблице");
+    JLabel addSecondTable = new JLabel("Введите путь ко второй таблице");
+    JTextField firstPath = new JTextField();
+    JTextField secondPath = new JTextField();
+    JTextArea messages = new JTextArea();
+    HSSFWorkbook firstHSSFWorkbook;
+    HSSFWorkbook secondHSSFWorkbook;
+
+    public AppFrame() {
+        setTitle("Сравнение таблиц Excel");
+        setSize(600,400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        addFirstTable.setAlignmentX(Component.CENTER_ALIGNMENT);  // Установить центральное расположение элементов.
+        firstPath.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addSecondTable.setAlignmentX(Component.CENTER_ALIGNMENT);
+        secondPath.setAlignmentX(Component.CENTER_ALIGNMENT);
+        messages.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        firstPath.setMaximumSize(new Dimension(500,20));  // Ограничить размеры отдельных элементов.
+        secondPath.setMaximumSize(new Dimension(500,20));
+        messages.setMaximumSize(new Dimension(500,100));
+
+        mainPain.add(Box.createRigidArea(new Dimension(mainPain.getWidth(), 50)));  // Установить отступы.
+        mainPain.add(addFirstTable);
+        mainPain.add(firstPath);
+        mainPain.add(Box.createRigidArea(new Dimension(mainPain.getWidth(), 50)));
+        mainPain.add(addSecondTable);
+        mainPain.add(secondPath);
+        mainPain.add(Box.createRigidArea(new Dimension(mainPain.getWidth(), 50)));
+        mainPain.add(messages);
+
+        firstPath.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProcessBuilder processBuilder = new ProcessBuilder(  // Запустить файл в Excel.
+                        "C:\\Program Files (x86)\\Microsoft Office\\Office12\\EXCEL.EXE",
+                        firstPath.getText()
+                        );
+                try {
+                    processBuilder.start();
+                } catch (IOException exc) {
+                    throw new RuntimeException(exc);
+                }
+            }
+        });
+
+        secondPath.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ProcessBuilder processBuilder = new ProcessBuilder(  // Запустить файл в Excel.
+                        "C:\\Program Files (x86)\\Microsoft Office\\Office12\\EXCEL.EXE",
+                        secondPath.getText()
+                );
+                try {
+                    processBuilder.start();
+                } catch (IOException exc) {
+                    throw new RuntimeException(exc);
+                }
+            }
+        });
+
+        mainPain.setLayout(new BoxLayout(mainPain,BoxLayout.PAGE_AXIS));  // Установить менеджер компоновки для
+                                                                          // вертикального расположения элементов на
+                                                                          // панели.
+
+        add(mainPain);
+
+        setLocationRelativeTo(null);  // Установить открытие окна по центру экрана.
+
+        setVisible(true);
+    }
+
+    public static HSSFWorkbook readWorkbook(String filename) {
+        try {
+            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(filename));
+            HSSFWorkbook wb = new HSSFWorkbook(fs);
+            return wb;
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+}
+
