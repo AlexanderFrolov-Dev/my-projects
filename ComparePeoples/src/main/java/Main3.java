@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// Работает правильно. Сделать вывод в файл только СНИЛС (ххх-ххх-ххх хх).
+// Работает правильно. Сделать вывод в файл только СНИЛС (ххх-ххх-ххх хх), но в самой выборке условие поиска оставить
+// "О\\d{3}-\\d{3}-\\d{3}\\s\\d{8}".
 public class Main3 {
     public static void main(String[] args) throws IOException {
 
@@ -77,6 +78,7 @@ public class Main3 {
 
 //        Pattern pattern = Pattern.compile("О\\d{3}-\\d{3}-\\d{3}\\s\\d{8}[А-Я]+\\s+[А-Я]+\\s+[А-Я]+");
             Pattern pattern = Pattern.compile("О\\d{3}-\\d{3}-\\d{3}\\s\\d{8}");
+//            Pattern pattern = Pattern.compile("\\d{3}-\\d{3}-\\d{3}\\s\\d{2}");
 
             Matcher m = pattern.matcher(RSO);
             Matcher m2 = pattern.matcher(ESRN);
